@@ -142,6 +142,9 @@ For the first step (select the names of the relevant variables) we used the foll
 
 The second step is a little trickier. Considering the explanations given in “features_info.txt” and trying to do thing in an automated way, we decided to apply the following pattern:
 
+	for(i in 1:66){
+        	names(RelevantDataSet)[i+2] <- feature_names[i]
+	}
 
 - An “f” at the begging of the variable name means a “Frequency domain” measure. We changed “f” by its meaning.
 - A “t” stands for “Time domain” measure. We changed the label
