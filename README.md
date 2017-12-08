@@ -60,13 +60,105 @@ So, after setting the working directory. The first task is to read the files des
 
 The txt files come with no heading and the same “V1” column name is applied while reading into R. We renamed this V1 column before joining the columns with a cbind() function. Here is the code for the Train sample:
 
-	`# Reading test_data`
-	`subject_test <- read.table("./test/subject_test.txt")`
-	`y_test <- read.table("./test/y_test.txt")`
-	`X_test <- read.table("./test/X_test.txt")`
+	# Reading test_data
+	subject_test <- read.table("./test/subject_test.txt")
+	y_test <- read.table("./test/y_test.txt")
+	X_test <- read.table("./test/X_test.txt")
 
-The txt files come with no heading and the same “V1” column name is applied while reading into R. We renamed this V1 column before joining the columns with a cbind() function. Here is the code for the Train sample:
-  
+The same is done for the Train data set. After that a single data set merging Test and Train is created:
+
+	#Q1 Merges the training and the test sets to create one data set.
+	OneDataSet <- rbind(Train, Test)
+
+Test and Train datasets are then removed from the Workspace:
+	
+	rm(Train, Test)
+	
+## Step2. Extracts only the measurements on the mean and standard deviation for each measurement.
+
+The file “features.txt” contains the name of the features, i.e. of the columns of the “X_train/test.txt” files. After reading the “features_info.txt” file, we decided that the variables we are focusing on are those which names ending in “mean()” or “std()”.
+
+There are other variables names including “Mean” in their names, such as 
+
+- 294 fBodyAcc-meanFreq()-X
+- 295 fBodyAcc-meanFreq()-Y
+- 296 fBodyAcc-meanFreq()-Z
+
+ or
+ 
+- 555 angle(tBodyAccMean,gravity)
+- 556 angle(tBodyAccJerkMean),gravityMean)
+
+Nevertheless we have decided to focus only on those ending in “mean()” 
+
+For this Step2, the instructions in the R.Script do the following:
+
+1. Read “features.txt”, a 561 row file
+2. Using grep() function we looked for those variables ending in “mean()” and with another grep(), those ending in “std()”. 
+
+
+What we get is a set of numbers indicating the columns that we have to select from the “OneDataSet” table. A new data.frame, called “RelevantDataSet” is set to store only those relevant features. The “OneDataSet” is then removed from the Workspace.
+
+## Step3. Uses descriptive activity names to name the activities in the data set
+
+The second column of the “RelevantDataSet” is named “activity” and contains numbers (from 1 to 6) representing the 6 activities mentioned before (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING).
+
+
+In the Scrip, we first read the file “activity_labels.txt” into a table called “activity_names” with only 6 rows and two columns, one with the code (1 to 6), the other with the name of the activity. 
+
+ colV1 | colv2
+ 1 | WALKING
+ 2 | WALKING_UPSTAIRS
+ 3 | WALKING_DOWNSTAIRS
+ 4 | SITTING
+ 5 | STANDING
+ 6 | LAYING
+ 
+ 
+ We the use a for() structure to change each number in the “activity” column of “RelevantDataSet” by their descriptive label.
+
+	for (i in 1:6){
+        	RelevantDataSet$activity[RelevantDataSet$activity==i] <- as.character(activity_names[i,2])
+	}
+
+## Step4. Appropriately labels the data set with descriptive variable names.
+
+The features contained in our “RelevantDataSet” are identified by variable names such as “V1”, “V2” and so forth up to a total of 66, non-correlative labels. We could rename theses variables using their corresponding labels from the “features.txt” file. The meaning of each of the labels can be derived from the explanations given in “features_info.txt”. 
+
+However, a more descriptive name would be appropriate to use, instead of directly using the names of the “features.txt” file. We will, nevertheless, use this file first to select the names of what we called “relevant variables”, i.e. those ending with “mean()” or “std()”. On a second step we will change the names with more descriptive labels.
+
+
+For the first step (select the names of the relevant variables) we used the following chunk of code:
+
+	relevantVars <- relevantVars-2
+	feature_names <- as.character(features[relevantVars,2]) 
+
+The second step is a little trickier. Considering the explanations given in “features_info.txt” and trying to do thing in an automated way, we decided to apply the following pattern:
+
+
+- An “f” at the begging of the variable name means a “Frequency domain” measure. We changed “f” by its meaning.
+- A “t” stands for “Time domain” measure. We changed the label
+- Instead of “Body”, we proposed a more descriptive text: “Body acceleration”. (Note: Some variables were named with two “Bodys”, as in “516 fBodyBodyAccJerkMag-mean()”. “BodyBody” was changed to a single “Body”)
+- “Gravity” stands for “Gravity acceleration”. Texts have been changed accordingly
+- “Jerk” has been changed by something more descriptive: “Jerk signal”
+- “Acc” refers to “Accelerometer” and so it was changed
+- “Gyro” has been renamed into “Gyroscope”
+- “Mag” is used when a “Fourier transformation” was applied 
+- “mean()” has been changed by “Average”
+- “std()” was substituted with a more descriptive “Standard deviation”
+
+
+The above rules were applied to the “features_names” vector, using the gsub() function to change the 66 names accordingly. As in step3, we apply a for() structure to rename the features in the “RelevantDataset” table.
+
+## Step5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
+The “RelevantDataSet” data.frame is grouped using “group_by()” function, by the two first rows, i.e. by “subject” and “activity”. There are 30 subjects and 6 different activities, so a total of 180 groups are defined.
+
+For each group the average of the observations is calculated and saved in a new data set called” Tidydata”. This data set can be considered a “tidy” data set because as stated in the 3rd video of week1: 1) each row contains a single variable; 2) each observation (a mean in this case) is in a different row; 3) There is a header row with variable names and 4) names are human readable.
+
+The final instruction of the R.script is to write the “Tidydata” data.frame into a “Tidydata .txt” file.
+
+
  
 
 
