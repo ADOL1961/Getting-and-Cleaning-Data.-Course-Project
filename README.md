@@ -50,21 +50,20 @@ The rest of this ReadMe document will explain the associated R. Script in which 
 
 Previous work to understand the database is required. With the help of the “README.txt” provided in the data base, we discovered that:
 
-1.The “subject_train/test.txt” files contain the identification code (a correlative number) of the subject of each record. There are 21 different id codes for the train set and 9 for the test, corresponding to 70% and 30% of the 30 subjects.
+1. The “subject_train/test.txt” files contain the identification code (a correlative number) of the subject of each record. There are 21 different id codes for the train set and 9 for the test, corresponding to 70% and 30% of the 30 subjects.
+
 2. The “y_train/test.txt” record the activities associated to each observation. Both files have just one column with 6 different values, one per activity. The “activity_label.txt” file contains the labels for the activities.
+
 3. The bulk of the information, i.e. the 561 features for each record are contained respectively in the “X_train/test.txt” files.
 
 So, after setting the working directory. The first task is to read the files described above, and put together the subject, activity and features columns, in two databases: one for the test sample and the other for the training one. We called Train and Test the respective data.frames. 
 
 The txt files come with no heading and the same “V1” column name is applied while reading into R. We renamed this V1 column before joining the columns with a cbind() function. Here is the code for the Train sample:
 
-  `# Reading test_data`
-  
-  `subject_test <- read.table("./test/subject_test.txt")`
-  
-  `y_test <- read.table("./test/y_test.txt")`
-  
-  `X_test <- read.table("./test/X_test.txt")`
+	`# Reading test_data`
+	`subject_test <- read.table("./test/subject_test.txt")`
+	`y_test <- read.table("./test/y_test.txt")`
+	`X_test <- read.table("./test/X_test.txt")`
 
 The txt files come with no heading and the same “V1” column name is applied while reading into R. We renamed this V1 column before joining the columns with a cbind() function. Here is the code for the Train sample:
   
