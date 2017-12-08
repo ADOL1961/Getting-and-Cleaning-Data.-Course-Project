@@ -1,4 +1,4 @@
-__1. “Tidydata” DATABASE__: 180 obs. 68 variables
+## __1. “Tidydata” DATABASE__: 180 obs. 68 variables
 - __subject.__ Integer. 30 correlative values. 1,2,…30
 - __activity.__  Factor. 6 levels:
   - WALKING
@@ -76,5 +76,15 @@ __1. “Tidydata” DATABASE__: 180 obs. 68 variables
 		65	Frequency domain.Body acceleration.Gyroscope.Jerk signal.Fourier Transformation.-Average.
 		66	Frequency domain.Body acceleration.Gyroscope.Jerk signal.Fourier Transformation.-Standard deviation.
 
+
+## 2. Original DATA: 
+
+__activity_labels:  txt file with Name of the 6 different activities__
+1. WALKING
+2. WALKING_UPSTAIRS
+3. WALKING_DOWNSTAIRS
+4. SITTING
+5. STANDING
+6. LAYING
 
 
