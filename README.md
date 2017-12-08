@@ -64,6 +64,14 @@ The txt files come with no heading and the same “V1” column name is applied 
 	subject_test <- read.table("./test/subject_test.txt")
 	y_test <- read.table("./test/y_test.txt")
 	X_test <- read.table("./test/X_test.txt")
+	#Calling dplyr library
+	library(dplyr)
+	# Renaming test identifying variables
+	subject_test <- rename(subject_test, subject=V1)
+	activity_test <- rename(y_test, activity=V1)
+	# Merging identifiers and features
+	Test <- cbind(subject_test,activity_test,X_test)
+
 
 The same is done for the Train data set. After that a single data set merging Test and Train is created:
 
