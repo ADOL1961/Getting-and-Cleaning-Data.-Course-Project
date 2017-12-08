@@ -114,13 +114,12 @@ The second column of the “RelevantDataSet” is named “activity” and conta
 
 In the Scrip, we first read the file “activity_labels.txt” into a table called “activity_names” with only 6 rows and two columns, one with the code (1 to 6), the other with the name of the activity. 
 
- colV1 | colv2
- 1 | WALKING
- 2 | WALKING_UPSTAIRS
- 3 | WALKING_DOWNSTAIRS
- 4 | SITTING
- 5 | STANDING
- 6 | LAYING
+ 1.  | WALKING
+ 2.  | WALKING_UPSTAIRS
+ 3.  | WALKING_DOWNSTAIRS
+ 4.  | SITTING
+ 5.  | STANDING
+ 6.  | LAYING
  
  
  We the use a for() structure to change each number in the “activity” column of “RelevantDataSet” by their descriptive label.
